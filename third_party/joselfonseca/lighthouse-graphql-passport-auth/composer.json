@@ -1,0 +1,57 @@
+{
+    "name": "joselfonseca/lighthouse-graphql-passport-auth",
+    "description": "Add GraphQL types and mutations for login and recover password functionalities",
+    "keywords": [
+        "laravel",
+        "GraphQL",
+        "lighthouse",
+        "passport-auth"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Luis Fonseca",
+            "email": "jose@ditecnologia.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "nuwave/lighthouse": "^6.0",
+        "laravel/passport": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+        "laravel/socialite": "^4.0 || ^5.0",
+        "lcobucci/jwt": "^4.0 || ^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0 || ^10.0",
+        "orchestra/testbench": "^7.0 || ^8.0",
+        "eduarguz/shift-php-cs": "dev-master",
+        "laravel/legacy-factories": "^1.0",
+        "laravel/framework": "^9.0 || ^10.0",
+        "nesbot/carbon": "^2.62.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Joselfonseca\\LighthouseGraphQLPassport\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joselfonseca\\LighthouseGraphQLPassport\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Joselfonseca\\LighthouseGraphQLPassport\\Providers\\LighthouseGraphQLPassportServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "cs": [
+            "PHP_CS_FIXER_IGNORE_ENV=true vendor/bin/php-cs-fixer fix --config=.php_cs.dist -vvv --using-cache=no"
+        ]
+    }
+}

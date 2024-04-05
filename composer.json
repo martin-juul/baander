@@ -1,0 +1,80 @@
+{
+    "name": "martinjuul/baander",
+    "type": "project",
+    "description": "a media server project",
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^8.3",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "^7.2",
+        "joselfonseca/lighthouse-graphql-passport-auth": "@dev",
+        "laravel/framework": "^11.0",
+        "laravel/passport": "^12.0",
+        "laravel/pulse": "^1.0@beta",
+        "laravel/tinker": "^2.9",
+        "mll-lab/laravel-graphiql": "^3.1",
+        "nuwave/lighthouse": "^6.33",
+        "php-ffmpeg/php-ffmpeg": "^1.2",
+        "tpetry/laravel-postgresql-enhanced": "^0.37.0"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1",
+        "larastan/larastan": "^2.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^10.1",
+        "spatie/laravel-ignition": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./third_party/joselfonseca/lighthouse-graphql-passport-auth",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
+}

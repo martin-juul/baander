@@ -1,0 +1,4 @@
+schema: ./storage/app/lighthouse-schema.graphql
+include:
+  - graphql/**
+  - schema-directives.graphql

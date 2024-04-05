@@ -1,0 +1,14 @@
+type User @model(class: "Joselfonseca\\LighthouseGraphQLPassport\\Tests\\User"){
+    id: ID!
+    name: String!
+    email: String!
+}
+
+type Query {
+    me: User @auth(guard: "api")
+    loggedInUserViaGuardForTest: User @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\Tests\\LoggedInUser@resolve") @guard(with: ["api"])
+}
+
+type Mutation {
+    createUser: User @create(model: "Joselfonseca\\LighthouseGraphQLPassport\\Tests\\User")
+}

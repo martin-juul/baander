@@ -1,0 +1,7 @@
+.vagrant/
+/vendor
+/node_modules
+composer.lock
+/build/
+.idea/*
+/.phpunit.result.cache
