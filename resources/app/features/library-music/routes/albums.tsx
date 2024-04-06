@@ -31,13 +31,13 @@ export default function Albums() {
             </div>
           ))}
         </CoverGrid>
-      </Layout>
 
-      {showAlbumDetail && (
-        <div className={styles.albumDetailContainer} ref={ref}>
-          <AlbumDetail album={showAlbumDetail}/>
-        </div>
-      )}
+        {showAlbumDetail && (
+          <div className={styles.albumDetailContainer} ref={ref}>
+            <AlbumDetail album={showAlbumDetail}/>
+          </div>
+        )}
+      </Layout>
     </>
   );
 }

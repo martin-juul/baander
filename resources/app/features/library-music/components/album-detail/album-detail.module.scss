@@ -1,18 +1,24 @@
 .albumDetail {
     padding: 10px;
-    width: 700px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    height: 100%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
 
-    .albumResume {
+    .albumInfo {
         display: flex;
-        flex-direction: column;
-        margin-bottom: 12px;
-        justify-content: left;
-        width: 230px;
 
         .albumCover {
 
+        }
+
+        .albumResume {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 12px;
+            justify-content: left;
+
+            align-self: center;
         }
     }
 

@@ -1,6 +1,7 @@
 .albumsLayout {
-    padding: 12px 12px 90px 12px;
-    position: relative;
+    padding: 12px 0px 90px 12px;
+    display: flex;
+    flex-direction: row;
 
     .album {
         flex: 0 1;
@@ -8,12 +9,8 @@
     }
 
     .albumDetailContainer {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        background-color: var(--semi-color-tertiary-light-active);
+        background-color: var(--semi-color-fill-0);
         border-top-left-radius: 6px;
-        z-index: 11;
     }
 }
 

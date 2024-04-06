@@ -14,25 +14,31 @@ export function AlbumDetail({album}: AlbumDetailProps) {
 
   return (
     <div className={styles.albumDetail}>
-      <div className={styles.albumResume}>
+      <div className={styles.albumInfo}>
         <div className={styles.albumCover}>
           <Cover imgSrc={album.cover} size={220}/>
         </div>
 
-        <Title heading={2}>{album.title}</Title>
-        <Text type="secondary">{album.artist}</Text>
+        <div className={styles.albumResume}>
+          <Title heading={2}>{album.title}</Title>
+          <Text type="secondary">{album.artist}</Text>
 
-        <Text type="secondary">{album.genre} - {album.releaseYear}</Text>
+          <Text type="secondary">{album.genre} - {album.releaseYear}</Text>
+        </div>
       </div>
 
-      <div className={styles.trackList}>
-        {tracks.map((track, index) => (
-          <div className={styles.track} key={index}>
-            <Text type="primary">{track.number}</Text>
-            <Text>{track.title}</Text>
-            <Text>{track.duration}</Text>
-          </div>
-        ))}
+      <div>
+        <Text type="secondary">Tracks</Text>
+
+        <div className={styles.trackList}>
+          {tracks.map((track, index) => (
+            <div className={styles.track} key={index}>
+              <Text type="primary">{track.number}</Text>
+              <Text>{track.title}</Text>
+              <Text>{track.duration}</Text>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
