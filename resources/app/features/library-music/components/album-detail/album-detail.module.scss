@@ -1,0 +1,39 @@
+.albumDetail {
+    padding: 10px;
+    width: 700px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    .albumResume {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+        justify-content: left;
+        width: 230px;
+
+        .albumCover {
+
+        }
+    }
+
+    .trackList {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: auto;
+
+        .track {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px;
+            border-bottom: 1px solid var(--semi-color-bg-3);
+            user-select: none;
+            transition: background-color 0.15ms ease-in-out;
+
+            &:hover {
+                background-color: var(--semi-color-bg-3);
+                cursor: pointer;
+            }
+        }
+    }
+}

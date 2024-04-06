@@ -6,6 +6,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { PersonalTokenProvider } from '@/providers/personal-token-provider.tsx';
+import './index.css'
 
 // We can't use strict mode due to
 // https://github.com/DouyinFE/semi-design/issues/2006

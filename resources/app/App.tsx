@@ -14,7 +14,7 @@ import { PersonalTokenContext } from '@/providers/personal-token-provider.tsx';
 
 function App() {
   const token = useSelector(selectToken);
-  const personalTokenContext = useContext(PersonalTokenContext)
+  const personalTokenContext = useContext(PersonalTokenContext);
 
   useEffect(() => {
     if (token?.access_token && personalTokenContext.token !== token.access_token) {
@@ -23,13 +23,14 @@ function App() {
   }, [token, token?.access_token, personalTokenContext.setToken]);
 
   return (
+
     <ApolloProvider client={client}>
-        <ErrorBoundary fallback={<div>App error</div>}>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-          <ToastNotifications/>
-        </ErrorBoundary>
+      <ErrorBoundary fallback={<div>App error</div>}>
+        <BrowserRouter>
+          <AppRoutes/>
+        </BrowserRouter>
+        <ToastNotifications/>
+      </ErrorBoundary>
     </ApolloProvider>
 
   );

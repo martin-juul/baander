@@ -33,6 +33,8 @@ type Query {
      order_by: [OrderByClause!] @orderBy
     ): [User!]! @guard(with: ["api"]) @paginate(defaultCount: 10)
 
+    accessTokens(order_by: [OrderByClause]): [AccessToken!]! @paginate(defaultCount: 30) @guard(with: ["api"])
+
     me: User @auth
 }
 

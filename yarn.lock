@@ -1458,6 +1458,11 @@
     tslib "^2.6.2"
     webcrypto-core "^1.7.9"
 
+"@react-awesome/use-click-outside@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@react-awesome/use-click-outside/-/use-click-outside-0.0.3.tgz#376053240cd4f7358ec51e8a3509ca4e5912af8e"
+  integrity sha512-XnrlL30rSPabs075LEeSdwgQ5KLonrRluHEC12Gg8OaWWZh47sXk5zfj4HZohEumnzrAmv+ODoIlRuuFz8L7iw==
+
 "@reduxjs/toolkit@^2.1.0":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.2.3.tgz#5ce71cbf162f98c5dafb49bd3f1e11c5486ab9c4"
@@ -3690,6 +3695,11 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
+
 nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
@@ -4712,6 +4722,14 @@ vite-plugin-full-reload@^1.1.0:
   dependencies:
     picocolors "^1.0.0"
     picomatch "^2.3.1"
+
+vite-plugin-graphql-loader@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-graphql-loader/-/vite-plugin-graphql-loader-3.0.1.tgz#f92a05c68499555fb7bab9a6c99c16e54abacd19"
+  integrity sha512-srY4oik0ObdRsOcUXhfqukx3tqWRj5lDrQN6LU4NdHrujcRcwxp60qEW2Lcc+pprcRJm66YVEFVmJ4/UiXkYvw==
+  dependencies:
+    graphql "^16.8.1"
+    graphql-tag "^2.12.6"
 
 vite-plugin-semi-theme@^0.5.0:
   version "0.5.0"

@@ -20,6 +20,25 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AccessToken = {
+  __typename?: 'AccessToken';
+  created_at: Scalars['DateTime']['output'];
+  expires_at: Scalars['DateTime']['output'];
+  name: Scalars['String']['output'];
+  revoked: Scalars['Boolean']['output'];
+  scopes: Array<Scalars['String']['output']>;
+  updated_at: Scalars['DateTime']['output'];
+};
+
+/** A paginated list of AccessToken items. */
+export type AccessTokenPaginator = {
+  __typename?: 'AccessTokenPaginator';
+  /** A list of AccessToken items. */
+  data: Array<AccessToken>;
+  /** Pagination information about the list of items. */
+  paginatorInfo: PaginatorInfo;
+};
+
 export type AuthPayload = {
   __typename?: 'AuthPayload';
   access_token?: Maybe<Scalars['String']['output']>;
@@ -151,11 +170,20 @@ export type PaginatorInfo = {
 /** Indicates what fields are available at the top level of a query operation. */
 export type Query = {
   __typename?: 'Query';
+  accessTokens: AccessTokenPaginator;
   me?: Maybe<User>;
   /** Find a single user by an identifying attribute. */
   user?: Maybe<User>;
   /** List multiple users. */
   users: UserPaginator;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryAccessTokensArgs = {
+  first?: Scalars['Int']['input'];
+  order_by?: InputMaybe<Array<InputMaybe<OrderByClause>>>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 

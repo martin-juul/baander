@@ -24,6 +24,12 @@ type RefreshTokenPayload {
     token_type: String!
 }
 
+type AccessToken {
+    name: String
+    scopes: String
+    revoked: Boolean!
+}
+
 type LogoutResponse {
     status: String!
     message: String

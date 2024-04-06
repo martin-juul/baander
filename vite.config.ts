@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react-swc';
 import semi from 'vite-plugin-semi-theme';
 import { fileURLToPath } from 'url';
+import graphqlLoader from "vite-plugin-graphql-loader";
 
 // https://vitejs.dev/config/
 export default defineConfig(config => {
@@ -26,6 +27,7 @@ export default defineConfig(config => {
       semi({
         theme: '@semi-bot/semi-theme-baander',
       }),
+      graphqlLoader(),
     ],
     resolve: {
       alias: {

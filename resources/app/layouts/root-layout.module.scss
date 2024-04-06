@@ -1,0 +1,23 @@
+.navigationHeaderLogo {
+    align-items: flex-start;
+    column-gap: 0;
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    backdrop-filter: blur(6px);
+
+    .footerWell {
+        background-color: var(--semi-color-fill-0);
+        padding-left: 9px;
+        width: 100%;
+    }
+
+}
+
