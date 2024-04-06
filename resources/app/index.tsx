@@ -5,15 +5,18 @@ import 'reset-css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
+import { PersonalTokenProvider } from '@/providers/personal-token-provider.tsx';
 
 // We can't use strict mode due to
 // https://github.com/DouyinFE/semi-design/issues/2006
 // https://github.com/DouyinFE/semi-design/issues/201
 
 ReactDOM.createRoot(document.getElementById('baanderapproot') as HTMLElement).render(
-  <Provider store={store}>
-    <LocaleProvider locale={en_US}>
-      <App/>
-    </LocaleProvider>
-  </Provider>
+  <PersonalTokenProvider>
+    <Provider store={store}>
+      <LocaleProvider locale={en_US}>
+        <App/>
+      </LocaleProvider>
+    </Provider>
+  </PersonalTokenProvider>,
 );

@@ -11,6 +11,7 @@ type AuthPayload {
     access_token: String
     refresh_token: String
     expires_in: Int
+    issued_at: Int! @rename(attribute: "created_at")
     token_type: String
     user: User
 }
@@ -18,6 +19,7 @@ type AuthPayload {
 type RefreshTokenPayload {
     access_token: String!
     refresh_token: String!
+    issued_at: Int! @rename(attribute: "created_at")
     expires_in: Int!
     token_type: String!
 }

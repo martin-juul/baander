@@ -1,12 +1,26 @@
 import { gql, MutationHookOptions, useMutation } from '@apollo/client';
 
-export type LoginType = {
-  __typename?: 'Mutation';
-  login: {
-    __typename?: 'AccessToken';
-    token: string;
-  };
-};
+export interface AuthPayload {
+  login: Login
+}
+
+export interface Login {
+  access_token: string
+  refresh_token: string
+  expires_in: number
+  token_type: string
+  user: User
+  __typename: string
+}
+
+export interface User {
+  name: string
+  is_admin: boolean
+  created_at: string
+  updated_at: string
+  __typename: string
+}
+
 
 export type LoginInput = {
   username: string;
@@ -31,9 +45,9 @@ export const loginMutation = gql`
 `;
 
 const useLoginMutation = (
-  options?: MutationHookOptions<LoginType, LoginInput>,
+  options?: MutationHookOptions<AuthPayload, LoginInput>,
 ) => {
-  return useMutation<LoginType, LoginInput>(loginMutation, options);
+  return useMutation<AuthPayload, LoginInput>(loginMutation, options);
 };
 
 export default useLoginMutation;

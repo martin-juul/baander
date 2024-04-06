@@ -20,7 +20,7 @@ export const publicRoutes = [
     path: '/*',
     element: <App />,
     children: [
-      { path: 'login/*', element: <AuthRoutes /> },
-    ]
+      { path: '*', element: <AuthRoutes /> },
+    ],
   },
 ];

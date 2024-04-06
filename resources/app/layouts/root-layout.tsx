@@ -11,7 +11,7 @@ type SideNavigationItem = {
   icon: ReactNode;
 }
 
-const SideNavigation = () => {
+const LibraryNavigation = () => {
   const navigation: SideNavigationItem[] = [
     {
       itemKey: 'Recently Added',
@@ -27,6 +27,7 @@ const SideNavigation = () => {
 
   return (
     <Nav
+      style={{ height: 'inherit' }}
       bodyStyle={{ height: 320 }}
       items={navigation}
       header={{
@@ -44,9 +45,9 @@ export function RootLayout(props: { children?: ReactNode }) {
   const { Header, Sider } = Layout;
 
   return (
-    <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
-      <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
-        <SideNavigation/>
+    <Layout style={{ border: '1px solid var(--semi-color-border)', height: '100%' }}>
+      <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)', height: '100%' }}>
+        <LibraryNavigation/>
       </Sider>
       <Layout>
         <Header style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>

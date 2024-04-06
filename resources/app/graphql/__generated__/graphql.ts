@@ -24,6 +24,7 @@ export type AuthPayload = {
   __typename?: 'AuthPayload';
   access_token?: Maybe<Scalars['String']['output']>;
   expires_in?: Maybe<Scalars['Int']['output']>;
+  issued_at: Scalars['Int']['output'];
   refresh_token?: Maybe<Scalars['String']['output']>;
   token_type?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
@@ -181,6 +182,7 @@ export type RefreshTokenPayload = {
   __typename?: 'RefreshTokenPayload';
   access_token: Scalars['String']['output'];
   expires_in: Scalars['Int']['output'];
+  issued_at: Scalars['Int']['output'];
   refresh_token: Scalars['String']['output'];
   token_type: Scalars['String']['output'];
 };

@@ -1,19 +1,18 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Auth } from '@/services/auth.ts';
+import { tokenVar } from '@/providers/personal-token-provider.tsx';
 
 const httpLink = createHttpLink({
   uri: `${import.meta.env.VITE_APP_URL}/graphql`
 })
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = Auth.get();
-  // return the headers to the context so httpLink can read them
+  const accessToken = tokenVar();
+
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: accessToken ? `Bearer ${accessToken}` : "",
     }
   }
 });
