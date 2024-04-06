@@ -1,3 +1,7 @@
+:root {
+    --layout-default-body-padding: 12px 12px 90px 12px;
+}
+
 body {
     height: 100%;
     width: 100%;

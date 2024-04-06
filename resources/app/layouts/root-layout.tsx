@@ -40,7 +40,7 @@ const LibraryNavigation = () => {
       }}
       renderWrapper={({itemElement, props}) => {
         const routerMap = {
-          Artists: '/',
+          Artists: '/library/music/artists',
           Albums: '/library/music/albums',
           Songs: '/library/music/songs',
           Genres: '/library/music/genres',

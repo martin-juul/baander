@@ -59,3 +59,28 @@ export const trackMocks: Track[] = [
   { title: 'What\'s Going On', number: 11, duration: '3:52' },
   { title: 'My Generation', number: 12, duration: '3:18' },
 ]
+
+export interface Artist {
+  name: string;
+  imgSrc?: string;
+}
+
+export const artistMocks: Artist[] = [
+  { name: 'Elvis Presley' },
+  { name: 'The Beatles' },
+  { name: 'Headhunterz' },
+  { name: 'Michael Jackson' },
+  { name: 'AC/DC' },
+  { name: 'Pink Floyd' },
+  { name: 'Whitney Houston' },
+  { name: 'Meat Loaf' },
+  { name: 'Eagles' },
+  { name: 'Bee Gees' },
+  { name: 'Fleetwood Mac' },
+  { name: 'Adele' },
+  { name: 'Santana' },
+  { name: 'Creed' },
+  { name: 'Norah Jones' },
+  { name: 'Bob Marley & The Wailers' },
+  { name: 'Alanis Morissette' },
+]

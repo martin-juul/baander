@@ -1,7 +1,8 @@
-import styles from './album-detail.module.scss';
 import { Album, trackMocks } from '@/features/library-music/mock.ts';
 import { Cover } from '@/features/library-music/components/artwork/cover';
 import { Typography } from '@douyinfe/semi-ui';
+
+import styles from './album-detail.module.scss';
 
 interface AlbumDetailProps {
   album: Album;

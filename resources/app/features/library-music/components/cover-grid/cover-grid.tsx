@@ -4,12 +4,13 @@ import styles from './cover-grid.module.scss';
 
 interface CoverGridProps {
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-export function CoverGrid({ children }: CoverGridProps) {
+export function CoverGrid({ children, style }: CoverGridProps) {
 
   return (
-    <div className={styles.coverGrid}>
+    <div className={styles.coverGrid} style={style}>
       {children}
     </div>
   )
