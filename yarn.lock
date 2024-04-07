@@ -4078,6 +4078,11 @@ react-toastify@^10.0.4:
   dependencies:
     clsx "^2.1.0"
 
+react-virtuoso@^4.7.8:
+  version "4.7.8"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.7.8.tgz#d64f950b726a3fbcba647b0dc3c0d892ea80b1d4"
+  integrity sha512-P0BHOsLrmfnXv1bY9Nja07nvFciRGNgM7lTRHMcVDteTDb9tLtHzajBapKGUZ5zdyUOEVWvuW6ufQxzdGN2AKw==
+
 react-window@^1.8.2:
   version "1.8.10"
   resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.10.tgz#9e6b08548316814b443f7002b1cf8fd3a1bdde03"

@@ -1,0 +1,15 @@
+.scrollList {
+    border-right: 2px solid var(--semi-color-fill-0);
+
+    .title {
+        margin-left: 3px;
+    }
+}
+
+.listItem {
+    cursor: pointer;
+
+    &:active, &:focus {
+        background-color: var(--semi-color-fill-2);
+    }
+}

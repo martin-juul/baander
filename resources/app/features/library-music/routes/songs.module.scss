@@ -1,0 +1,12 @@
+.songsLayout {
+
+    .categories {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .category {
+            flex-grow: 1;
+        }
+    }
+}
