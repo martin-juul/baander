@@ -1,0 +1,156 @@
+enum LibraryType {
+    Music @enum(value: "music")
+    Podcast @enum(value: "podcast")
+    Audiobook @enum(value: "audiobook")
+    Movie @enum(value: "movie")
+    TvShow @enum(value: "tv_show")
+}
+
+type Library {
+    id: ID!
+    name: String!
+    path: String!
+    type: LibraryType!
+    order: Int!
+    last_scan: DateTime!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Genre {
+    "Unique primary key."
+    id: ID!
+
+    "The name of the genre."
+    name: String!
+
+    "The identifier used for paths"
+    slug: String!
+
+    "When the genre was created."
+    created_at: DateTime!
+
+    "When the genre was last updated."
+    updated_at: DateTime!
+}
+
+type Artist {
+    "Unique primary key."
+    id: ID!
+
+    "The name of the artist."
+    name: String!
+
+    "The identifier used for paths"
+    slug: String!
+
+    "The artist image"
+    image: Image
+
+    "When the account was created."
+    created_at: DateTime!
+
+    "When the account was last updated."
+    updated_at: DateTime!
+}
+
+type Album {
+    "Unique primary key."
+    id: ID!
+
+    "The name of the album."
+    name: String!
+
+    "The identifier used for paths"
+    slug: String!
+
+    "The release year"
+    year: Int!
+
+    "The album cover"
+    cover: Image
+
+    "When the account was created."
+    created_at: DateTime!
+
+    "When the account was last updated."
+    updated_at: DateTime!
+}
+
+type Song {
+    "Unique primary key."
+    id: ID!
+
+    "The name of the song."
+    name: String!
+
+    "The identifier used for paths"
+    slug: String!
+
+    "The track number"
+    track: Int
+
+    "The disc number"
+    disc: Int
+
+    "The duration of the song"
+    duration: Int
+
+    modified_time: Int
+
+    lyrics: String
+
+    path: String
+
+    "When the account was created."
+    created_at: DateTime!
+
+    "When the account was last updated."
+    updated_at: DateTime!
+}
+
+extend type Query {
+    library(
+        "Search by primary key."
+        id: ID! @eq
+
+        "Search by name."
+        name: String! @eq
+    ): Library @find
+    libraries(order_by: [OrderByClause!]!): [Library!]! @paginate(defaultCount: 10) @guard(with: ["api"])
+}
+
+extend type Mutation {
+    createLibrary(
+        "The name of the library."
+        name: String! @rules(apply: ["required"])
+
+        "The path of the library."
+        path: String! @rules(apply: ["required"])
+
+        "The type of the library."
+        type: LibraryType! @rules(apply: ["required"])
+
+        "The order of the library."
+        order: Int! @rules(apply: ["required"])
+    ): Library @create
+
+    updateLibrary(
+        "The name of the library."
+        name: String @rules(apply: ["required"])
+
+        "The path of the library."
+        path: String @rules(apply: ["required"])
+
+        "The type of the library."
+        type: LibraryType @rules(apply: ["required"])
+
+        "The order of the library."
+        order: Int @rules(apply: ["required"])
+    ): Library @update
+
+    deleteLibrary(
+        "Search by primary key."
+        id: ID! @eq
+    ): Library @delete
+}

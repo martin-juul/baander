@@ -22,12 +22,9 @@ export type Scalars = {
 
 export type AccessToken = {
   __typename?: 'AccessToken';
-  created_at: Scalars['DateTime']['output'];
-  expires_at: Scalars['DateTime']['output'];
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   revoked: Scalars['Boolean']['output'];
-  scopes: Array<Scalars['String']['output']>;
-  updated_at: Scalars['DateTime']['output'];
+  scopes?: Maybe<Scalars['String']['output']>;
 };
 
 /** A paginated list of AccessToken items. */
@@ -37,6 +34,40 @@ export type AccessTokenPaginator = {
   data: Array<AccessToken>;
   /** Pagination information about the list of items. */
   paginatorInfo: PaginatorInfo;
+};
+
+export type Album = {
+  __typename?: 'Album';
+  /** The album cover */
+  cover?: Maybe<Image>;
+  /** When the account was created. */
+  created_at: Scalars['DateTime']['output'];
+  /** Unique primary key. */
+  id: Scalars['ID']['output'];
+  /** The name of the album. */
+  name: Scalars['String']['output'];
+  /** The identifier used for paths */
+  slug: Scalars['String']['output'];
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime']['output'];
+  /** The release year */
+  year: Scalars['Int']['output'];
+};
+
+export type Artist = {
+  __typename?: 'Artist';
+  /** When the account was created. */
+  created_at: Scalars['DateTime']['output'];
+  /** Unique primary key. */
+  id: Scalars['ID']['output'];
+  /** The artist image */
+  image?: Maybe<Image>;
+  /** The name of the artist. */
+  name: Scalars['String']['output'];
+  /** The identifier used for paths */
+  slug: Scalars['String']['output'];
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime']['output'];
 };
 
 export type AuthPayload = {
@@ -59,6 +90,63 @@ export type ForgotPasswordResponse = {
   status: Scalars['String']['output'];
 };
 
+export type Genre = {
+  __typename?: 'Genre';
+  /** When the genre was created. */
+  created_at: Scalars['DateTime']['output'];
+  /** Unique primary key. */
+  id: Scalars['ID']['output'];
+  /** The name of the genre. */
+  name: Scalars['String']['output'];
+  /** The identifier used for paths */
+  slug: Scalars['String']['output'];
+  /** When the genre was last updated. */
+  updated_at: Scalars['DateTime']['output'];
+};
+
+export type Image = {
+  __typename?: 'Image';
+  created_at: Scalars['DateTime']['output'];
+  extension: Scalars['String']['output'];
+  height: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  mime_type: Scalars['String']['output'];
+  path: Scalars['String']['output'];
+  size: Scalars['Int']['output'];
+  updated_at: Scalars['DateTime']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+  width: Scalars['Int']['output'];
+};
+
+export type Library = {
+  __typename?: 'Library';
+  created_at: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  last_scan: Scalars['DateTime']['output'];
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  path: Scalars['String']['output'];
+  type: LibraryType;
+  updated_at: Scalars['DateTime']['output'];
+};
+
+/** A paginated list of Library items. */
+export type LibraryPaginator = {
+  __typename?: 'LibraryPaginator';
+  /** A list of Library items. */
+  data: Array<Library>;
+  /** Pagination information about the list of items. */
+  paginatorInfo: PaginatorInfo;
+};
+
+export enum LibraryType {
+  Audiobook = 'Audiobook',
+  Movie = 'Movie',
+  Music = 'Music',
+  Podcast = 'Podcast',
+  TvShow = 'TvShow'
+}
+
 export type LoginInput = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
@@ -72,13 +160,29 @@ export type LogoutResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createLibrary?: Maybe<Library>;
+  deleteLibrary?: Maybe<Library>;
   forgotPassword: ForgotPasswordResponse;
   login: AuthPayload;
   logout: LogoutResponse;
   refreshToken: RefreshTokenPayload;
   register: RegisterResponse;
   updateForgottenPassword: ForgotPasswordResponse;
+  updateLibrary?: Maybe<Library>;
   updatePassword: UpdatePasswordResponse;
+};
+
+
+export type MutationCreateLibraryArgs = {
+  name: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
+  path: Scalars['String']['input'];
+  type: LibraryType;
+};
+
+
+export type MutationDeleteLibraryArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -104,6 +208,14 @@ export type MutationRegisterArgs = {
 
 export type MutationUpdateForgottenPasswordArgs = {
   input?: InputMaybe<NewPasswordWithCodeInput>;
+};
+
+
+export type MutationUpdateLibraryArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Int']['input']>;
+  path?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<LibraryType>;
 };
 
 
@@ -171,6 +283,8 @@ export type PaginatorInfo = {
 export type Query = {
   __typename?: 'Query';
   accessTokens: AccessTokenPaginator;
+  libraries: LibraryPaginator;
+  library?: Maybe<Library>;
   me?: Maybe<User>;
   /** Find a single user by an identifying attribute. */
   user?: Maybe<User>;
@@ -184,6 +298,21 @@ export type QueryAccessTokensArgs = {
   first?: Scalars['Int']['input'];
   order_by?: InputMaybe<Array<InputMaybe<OrderByClause>>>;
   page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryLibrariesArgs = {
+  first?: Scalars['Int']['input'];
+  order_by: Array<OrderByClause>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryLibraryArgs = {
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -232,6 +361,29 @@ export enum RegisterStatuses {
   MustVerifyEmail = 'MUST_VERIFY_EMAIL',
   Success = 'SUCCESS'
 }
+
+export type Song = {
+  __typename?: 'Song';
+  /** When the account was created. */
+  created_at: Scalars['DateTime']['output'];
+  /** The disc number */
+  disc?: Maybe<Scalars['Int']['output']>;
+  /** The duration of the song */
+  duration?: Maybe<Scalars['Int']['output']>;
+  /** Unique primary key. */
+  id: Scalars['ID']['output'];
+  lyrics?: Maybe<Scalars['String']['output']>;
+  modified_time?: Maybe<Scalars['Int']['output']>;
+  /** The name of the song. */
+  name: Scalars['String']['output'];
+  path?: Maybe<Scalars['String']['output']>;
+  /** The identifier used for paths */
+  slug: Scalars['String']['output'];
+  /** The track number */
+  track?: Maybe<Scalars['Int']['output']>;
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime']['output'];
+};
 
 /** Directions for ordering a list of records. */
 export enum SortOrder {
@@ -290,6 +442,16 @@ export type UserPaginator = {
   paginatorInfo: PaginatorInfo;
 };
 
+export type CreateLibraryMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  type: LibraryType;
+  path: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
+}>;
+
+
+export type CreateLibraryMutation = { __typename?: 'Mutation', createLibrary?: { __typename?: 'Library', id: string, name: string, type: LibraryType, path: string, order: number } | null };
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -298,8 +460,17 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'User', name: string, is_admin: boolean, created_at: any, updated_at: any } | null } };
 
+export type AccessTokensQueryVariables = Exact<{
+  order_by?: InputMaybe<Array<OrderByClause>>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type AccessTokensQuery = { __typename?: 'Query', accessTokens: { __typename?: 'AccessTokenPaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number }, data: Array<{ __typename?: 'AccessToken', name?: string | null, scopes?: string | null, revoked: boolean }> } };
+
 export type UsersQueryVariables = Exact<{
-  order_by?: InputMaybe<Array<OrderByClause> | OrderByClause>;
+  order_by?: InputMaybe<Array<OrderByClause>>;
   first?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -313,6 +484,8 @@ export type ListUsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type ListUsersQuery = { __typename?: 'Query', users: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', name: string, is_admin: boolean, email: string }> } };
 
 
+export const CreateLibraryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateLibrary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LibraryType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"path"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createLibrary"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}},{"kind":"Argument","name":{"kind":"Name","value":"path"},"value":{"kind":"Variable","name":{"kind":"Name","value":"path"}}},{"kind":"Argument","name":{"kind":"Name","value":"order"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"order"}}]}}]}}]} as unknown as DocumentNode<CreateLibraryMutation, CreateLibraryMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access_token"}},{"kind":"Field","name":{"kind":"Name","value":"refresh_token"}},{"kind":"Field","name":{"kind":"Name","value":"expires_in"}},{"kind":"Field","name":{"kind":"Name","value":"token_type"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_admin"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const AccessTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AccessTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderByClause"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"page"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessTokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"page"},"value":{"kind":"Variable","name":{"kind":"Name","value":"page"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatorInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"firstItem"}},{"kind":"Field","name":{"kind":"Name","value":"hasMorePages"}},{"kind":"Field","name":{"kind":"Name","value":"lastItem"}},{"kind":"Field","name":{"kind":"Name","value":"lastPage"}},{"kind":"Field","name":{"kind":"Name","value":"perPage"}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"scopes"}},{"kind":"Field","name":{"kind":"Name","value":"revoked"}}]}}]}}]}}]} as unknown as DocumentNode<AccessTokensQuery, AccessTokensQueryVariables>;
 export const UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"users"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderByClause"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"page"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"page"},"value":{"kind":"Variable","name":{"kind":"Name","value":"page"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatorInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"firstItem"}},{"kind":"Field","name":{"kind":"Name","value":"hasMorePages"}},{"kind":"Field","name":{"kind":"Name","value":"lastItem"}},{"kind":"Field","name":{"kind":"Name","value":"lastPage"}},{"kind":"Field","name":{"kind":"Name","value":"perPage"}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"is_admin"}}]}}]}}]}}]} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>;
 export const ListUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_admin"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]} as unknown as DocumentNode<ListUsersQuery, ListUsersQueryVariables>;

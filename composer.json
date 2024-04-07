@@ -13,8 +13,9 @@
         "laravel/pulse": "^1.0@beta",
         "laravel/tinker": "^2.9",
         "mll-lab/laravel-graphiql": "^3.1",
-        "nuwave/lighthouse": "^6.33",
+        "nuwave/lighthouse": "^v6.36.0",
         "php-ffmpeg/php-ffmpeg": "^1.2",
+        "spatie/laravel-sluggable": "^3.6",
         "tpetry/laravel-postgresql-enhanced": "^0.37.0"
     },
     "require-dev": {

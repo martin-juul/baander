@@ -3,9 +3,9 @@
 namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class {{ class }} extends Model
+class {{ class }} extends BaseModel
 {
     use HasFactory;
 }

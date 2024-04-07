@@ -72,6 +72,15 @@ type AccessTokenPaginator {
   data: [AccessToken!]!
 }
 
+"A paginated list of Library items."
+type LibraryPaginator {
+  "Pagination information about the list of items."
+  paginatorInfo: PaginatorInfo!
+
+  "A list of Library items."
+  data: [Library!]!
+}
+
 "Aggregate functions when ordering by a relation without specifying a column."
 enum OrderByRelationAggregateFunction {
   "Amount of items."

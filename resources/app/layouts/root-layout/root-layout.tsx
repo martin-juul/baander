@@ -69,16 +69,18 @@ export function RootLayout(props: { children?: ReactNode }) {
           mode="horizontal"
           header={{
             logo: (
-              <Link to="/" className={styles.navigationHeaderLogo}>
+              <span className={styles.navigationHeaderLogo}>
                 <BaanderLogo size={36}/>
-              </Link>
+              </span>
             ),
             text: 'Bånder',
+            link: '/',
           }}
           footer={
             <>
-              <Link to="/settings" style={{ textDecoration: "none" }}>
-               <Button theme="borderless" style={{ color: 'var(--semi-color-text-2)', marginRight: '12px' }} icon={<Icon icon="fa-solid:cog"/>} />
+              <Link to="/settings" style={{textDecoration: 'none'}}>
+                <Button theme="borderless" style={{color: 'var(--semi-color-text-2)', marginRight: '12px'}}
+                        icon={<Icon icon="fa-solid:cog"/>}/>
               </Link>
 
               <Button
@@ -96,11 +98,11 @@ export function RootLayout(props: { children?: ReactNode }) {
         </Nav>
       </Header>
       <Layout>
-        <Sider>
-          {!location.pathname.startsWith('/settings') && (
+        {!location.pathname.startsWith('/settings') && (
+          <Sider>
             <LibraryNavigation/>
-          )}
-        </Sider>
+          </Sider>
+        )}
         <Content>{props.children}</Content>
       </Layout>
       <Footer className={styles.footer}>

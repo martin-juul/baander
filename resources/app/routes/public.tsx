@@ -1,5 +1,5 @@
-import { lazyImport } from '@/hooks/lazy-import.ts';
-import { BareLayout } from '@/layouts/bare-layout.tsx';
+import { lazyImport } from '@/hooks/lazy-import';
+import { BareLayout } from '@/layouts/bare-layout';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 

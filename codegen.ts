@@ -7,11 +7,13 @@ const config: CodegenConfig = {
   generates: {
     './resources/app/graphql/__generated__/': {
       preset: 'client',
-      plugins: [],
+      config: {
+        arrayInputCoercion: false,
+      },
       presetConfig: {
         gqlTagName: 'gql',
       }
-    }
+    },
   },
   ignoreNoDocuments: true,
 };

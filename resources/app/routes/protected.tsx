@@ -2,6 +2,7 @@ import { RootLayout } from '@/layouts/root-layout';
 import { Suspense } from 'react';
 import { Outlet, RouteObject } from 'react-router-dom';
 import { lazyImport } from '@/hooks/lazy-import.ts';
+import { SettingsLayout } from '@/features/settings/layout/settings-layout.tsx';
 
 const { LibraryMusicRoutes } = lazyImport(() => import('@/features/library-music/routes'), 'LibraryMusicRoutes');
 const { SettingsRoutes } = lazyImport(() => import('@/features/settings/routes'), 'SettingsRoutes');
@@ -28,7 +29,7 @@ export const protectedRoutes: RouteObject[] = [
       },
       {
         path: '/settings/*',
-        element: <SettingsRoutes />,
+        element: <SettingsLayout><SettingsRoutes /></SettingsLayout>,
       }
     ],
   },

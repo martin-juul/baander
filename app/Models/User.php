@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Log;
 use Joselfonseca\LighthouseGraphQLPassport\HasLoggedInTokens;
 use Laravel\Passport\HasApiTokens;
 
@@ -16,6 +14,8 @@ class User extends Authenticatable
         HasFactory,
         HasLoggedInTokens,
         Notifiable;
+
+    protected $dateFormat = 'Y-m-d H:i:sO';
 
     /**
      * The attributes that are mass assignable.

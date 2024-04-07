@@ -11,8 +11,8 @@
         "graphql-codegen:watch": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen -w"
     },
     "dependencies": {
-        "@apollo/client": "^3.9.2",
-        "@douyinfe/semi-animation-react": "^2.52.0",
+        "@apollo/client": "^3.9.10",
+        "@douyinfe/semi-animation-react": "^2.55.5",
         "@douyinfe/semi-icons": "^2.52.0",
         "@douyinfe/semi-ui": "^2.52.0",
         "@fontsource/open-sans": "^5.0.22",
@@ -25,9 +25,9 @@
         "normalize.css": "^8.0.1",
         "path": "^0.12.7",
         "react": "^18.2.0",
-        "react-cookie": "^7.0.2",
+        "react-cookie": "^7.1.4",
         "react-dom": "^18.2.0",
-        "react-error-boundary": "^4.0.12",
+        "react-error-boundary": "^4.0.13",
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.50.0",
         "react-redux": "^9.1.0",
@@ -41,11 +41,10 @@
         "vite-plugin-semi-theme": "^0.5.0"
     },
     "devDependencies": {
-        "@graphql-codegen/cli": "^5.0.0",
-        "@graphql-codegen/client-preset": "^4.1.0",
+        "@0no-co/graphqlsp": "^1.9.1",
+        "@graphql-codegen/cli": "^5.0.2",
+        "@graphql-codegen/client-preset": "^4.2.5",
         "@graphql-codegen/introspection": "^4.0.0",
-        "@graphql-codegen/typescript": "^4.0.1",
-        "@graphql-codegen/typescript-operations": "^4.0.1",
         "@graphql-codegen/typescript-react-apollo": "^4.2.0",
         "@graphql-codegen/typescript-react-query": "^6.1.0",
         "@graphql-typed-document-node/core": "^3.2.0",
@@ -63,11 +62,12 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
         "graphql-tag": "^2.0.0",
-        "laravel-vite-plugin": "^1.0.1",
+        "laravel-vite-plugin": "^1.0.2",
         "sass": "^1.70.0",
+        "ts-node": "^10.9.2",
         "tsconfig-paths-webpack-plugin": "^4.1.0",
         "typescript": "^5.3.3",
-        "vite": "^5.0.12",
+        "vite": "^5.2.8",
         "vite-plugin-graphql-loader": "^3.0.1"
     }
 }

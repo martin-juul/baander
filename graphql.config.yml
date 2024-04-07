@@ -1,4 +1,12 @@
-schema: ./storage/app/lighthouse-schema.graphql
+schema: './storage/lighthouse-schema.graphql'
+documents: '**/*.graphql'
 include:
-  - graphql/**
-  - schema-directives.graphql
+  - './schema-directives.graphql'
+    #- './storage/lighthouse-schema.graphql'
+    #- './resources/**/*.graphql'
+
+extensions:
+  endpoints:
+    Default GraphQL Endpoint:
+      url: https://baander.ddev.site/graphql
+      introspect: false

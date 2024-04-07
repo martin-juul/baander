@@ -61,6 +61,19 @@ type User {
     updated_at: DateTime!
 }
 
+type Image {
+    id: ID!
+    path: String!
+    extension: String!
+    size: Int!
+    mime_type: String!
+    width: Int!
+    height: Int!
+    url: String
+    created_at: DateTime!
+    updated_at: DateTime!
+
+}
 
 type Mutation {
     login(input: LoginInput @spread): AuthPayload! @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Login@resolve")
@@ -75,3 +88,4 @@ type Mutation {
 }
 
 #import auth.graphql
+#import libraries.graphql
