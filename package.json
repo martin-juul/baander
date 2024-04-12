@@ -8,7 +8,8 @@
         "build": "tsc && vite build",
         "dev": "vite",
         "graphql-codegen:compile": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen",
-        "graphql-codegen:watch": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen -w"
+        "graphql-codegen:watch": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen -w",
+        "refresh-gql-types": "ddev artisan lighthouse:print-schema --write && yarn graphql-codegen:compile"
     },
     "dependencies": {
         "@apollo/client": "^3.9.10",
@@ -20,6 +21,7 @@
         "@reduxjs/toolkit": "^2.1.0",
         "@semi-bot/semi-theme-baander": "^1.0.0",
         "@tanstack/react-query": "^5.18.1",
+        "date-fns": "^3.6.0",
         "graphql": "^16.8.1",
         "million": "^3.0.2",
         "normalize.css": "^8.0.1",

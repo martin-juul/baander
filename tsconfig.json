@@ -23,12 +23,6 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "baseUrl": "./resources/app",
-        "plugins": [
-            {
-                "name": "@0no-co/graphqlsp",
-                "schema": "./storage/lighthouse-schema.graphql"
-            }
-        ],
         "paths": {
             "@/*": [
                 "*"

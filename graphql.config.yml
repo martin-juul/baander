@@ -1,9 +1,7 @@
-schema: './storage/lighthouse-schema.graphql'
-documents: '**/*.graphql'
+schema: ./storage/app/lighthouse-schema.graphql
 include:
-  - './schema-directives.graphql'
-    #- './storage/lighthouse-schema.graphql'
-    #- './resources/**/*.graphql'
+  - graphql/**
+  - schema-directives.graphql
 
 extensions:
   endpoints:

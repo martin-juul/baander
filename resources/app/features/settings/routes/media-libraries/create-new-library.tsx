@@ -46,7 +46,7 @@ export function CreateNewLibrary() {
   }
 
   return (
-    <Content style={{ padding: '20px' }}>
+    <Content style={{ padding: '1rem' }}>
       <Title>Create new library</Title>
 
       {!data && (

@@ -10,7 +10,7 @@ class Album extends BaseModel
     use HasFactory, HasSlug;
 
     protected $fillable = [
-        'name',
+        'title',
         'slug',
         'year',
     ];
@@ -23,6 +23,11 @@ class Album extends BaseModel
         return SlugOptions::create()
                           ->generateSlugsFrom('name')
                           ->saveSlugsTo('slug');
+    }
+
+    public function library()
+    {
+        return $this->belongsTo(Library::class);
     }
 
     public function artist()
@@ -40,8 +45,8 @@ class Album extends BaseModel
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function library()
+    public function songs()
     {
-        return $this->belongsTo(Library::class);
+        return $this->hasMany(Song::class);
     }
 }

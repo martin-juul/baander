@@ -12,7 +12,7 @@ type Library {
     path: String!
     type: LibraryType!
     order: Int!
-    last_scan: DateTime!
+    last_scan: DateTime
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -58,8 +58,8 @@ type Album {
     "Unique primary key."
     id: ID!
 
-    "The name of the album."
-    name: String!
+    "The title of the album."
+    title: String!
 
     "The identifier used for paths"
     slug: String!
@@ -107,50 +107,4 @@ type Song {
 
     "When the account was last updated."
     updated_at: DateTime!
-}
-
-extend type Query {
-    library(
-        "Search by primary key."
-        id: ID! @eq
-
-        "Search by name."
-        name: String! @eq
-    ): Library @find
-    libraries(order_by: [OrderByClause!]!): [Library!]! @paginate(defaultCount: 10) @guard(with: ["api"])
-}
-
-extend type Mutation {
-    createLibrary(
-        "The name of the library."
-        name: String! @rules(apply: ["required"])
-
-        "The path of the library."
-        path: String! @rules(apply: ["required"])
-
-        "The type of the library."
-        type: LibraryType! @rules(apply: ["required"])
-
-        "The order of the library."
-        order: Int! @rules(apply: ["required"])
-    ): Library @create
-
-    updateLibrary(
-        "The name of the library."
-        name: String @rules(apply: ["required"])
-
-        "The path of the library."
-        path: String @rules(apply: ["required"])
-
-        "The type of the library."
-        type: LibraryType @rules(apply: ["required"])
-
-        "The order of the library."
-        order: Int @rules(apply: ["required"])
-    ): Library @update
-
-    deleteLibrary(
-        "Search by primary key."
-        id: ID! @eq
-    ): Library @delete
 }
