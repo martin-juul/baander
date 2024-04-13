@@ -3,6 +3,7 @@
 namespace App\Jobs\Library;
 
 use App\Models\{Album, Artist, Library, Song};
+use Illuminate\Support\Str;
 use App\Packages\MetaAudio\{MetaAudio, Mp3, Tagger};
 use App\Support\Logger\StdOutLogger;
 use Illuminate\Bus\Queueable;
@@ -22,8 +23,9 @@ class ScanMusicLibraryJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(Library $library)
     {
+        $this->library = $library;
     }
 
     /**
@@ -31,8 +33,7 @@ class ScanMusicLibraryJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // in real code we use the library path, for now we cheat.
-        $path = storage_path('testlibrary');
+        $path = $this->library->path;
         $this->logger = new StdOutLogger();
 
         $directories = LazyCollection::make(\File::directories($path));
@@ -58,10 +59,9 @@ class ScanMusicLibraryJob implements ShouldQueue
             $this->logger->info('Scanning file: ' . $file->getFilename());
 
             $realPath = $file->getRealPath();
-
             $hash = \Safe\sha1_file($realPath);
-            if (!MetaAudio::isAudioFile($file) || Song::whereHash($hash)->exists()) {
-
+            $metaAudio = new MetaAudio($file);
+            if (!$metaAudio->isAudioFile() || Song::whereHash($hash)->exists()) {
                 return;
             }
 
@@ -69,58 +69,78 @@ class ScanMusicLibraryJob implements ShouldQueue
 
             $meta = $this->tagger->open($realPath);
 
+            $albumArtist = Artist::whereName($meta->getBand())->firstOrCreate([
+                'name' => $meta->getBand(),
+            ]);
+
             $albumName = $meta->getAlbum();
             $this->logger->info('Album: ' . $albumName);
 
-            $album = Album::whereName($albumName)->first();
+            $directoryName = basename(\File::dirname($file));
+            $album = Album::whereTitle($albumName)->whereDirectory($directoryName)->first();
             if (!$album) {
-                $album = $this->createAlbum($meta);
+                $album = $this->createAlbum($meta, $albumArtist, $directoryName);
             }
 
-            $song = $this->makeSong($meta, $file, $hash);
+            $song = $this->makeSong($meta, $file, $metaAudio, $hash);
             $song->album()->associate($album);
             $song->saveOrFail();
 
-            if ($meta->getArtwork() && !$album->cover()->exists()) {
-                dispatch(new SaveAlbumCoverJob($album));
-            }
+            $artists = array_map(fn(string $artist) => trim($artist), \Safe\mb_split(';', $meta->getArtist()));
+            $this->processArtists($artists, $song);
+
+            // if ($meta->getAttachedPicture() && !$album->cover()->exists()) {
+            //     dispatch(new SaveAlbumCoverJob($album));
+            //}
         });
     }
 
-    private function createAlbum(Mp3 $meta): Album
+    private function createAlbum(Mp3 $meta, Artist $albumArtist, string $directoryName): Album
     {
-        $artist = Artist::firstOrCreate([
-            'name' => $meta->getArtist() ?? $meta->getBand(),
-        ]);
-
         $album = Album::make([
             'title' => $meta->getAlbumTitle() ?? $meta->getAlbum(),
             'year' => $meta->getYear(),
+            'directory' => $directoryName
         ]);
 
-        $album->artist()->associate($artist);
+        $album->artist()->associate($albumArtist);
         $album->library()->associate($this->library);
         $album->saveOrFail();
 
-        $this->logger->info('Created album: ' . $album->name);
+        $this->logger->info('Created album: ' . $album->title);
 
         return $album;
     }
 
-    private function makeSong(Mp3 $meta, \SplFileInfo $file, string $hash): Song
+    private function makeSong(
+        Mp3 $meta, \SplFileInfo $file, MetaAudio $metaAudio, string $hash): Song
     {
         $song = Song::make([
-            'name'          => $meta->getTitle(),
-            'track'         => $meta->getTrackNumber(),
-            'length'        => $meta?->getLength() ?? 0,
-            'comment'       => $meta->getComments(),
-            'lyrics'        => $meta->getUnsychronizedLyrics(),
-            'path'          => $file->getRealPath(),
+            'title' => $meta->getTitle(),
+            'track' => $meta->getTrackNumber(),
+            'length' => $metaAudio->probeLength(),
+            'comment' => $meta->getComments(),
+            'lyrics' => $meta->getUnsychronizedLyrics(),
+            'path' => $file->getRealPath(),
             'modified_time' => $file->getMTime(),
-            'hash'          => $hash,
+            'hash' => $hash,
         ]);
 
         return $song;
+    }
 
+    private function processArtists(array $artists, Song $song)
+    {
+        $artistIds = [];
+
+        foreach ($artists as $artist) {
+            $artistModel = Artist::whereName($artist)->firstOrCreate([
+                'name' => $artist,
+            ]);
+
+           $artistIds[] = $artistModel->id;
+        }
+
+        $song->artists()->sync($artistIds);
     }
 }

@@ -42,9 +42,9 @@ class SaveAlbumCoverJob implements ShouldQueue
         $tagger->addDefaultModules();
 
         $mp3 = $tagger->open($song->path);
-        $artwork = $mp3->getArtwork();
+        $artwork = $mp3->getAttachedPicture();
 
-        dump($artwork);
+
     }
 
     private function createImage()

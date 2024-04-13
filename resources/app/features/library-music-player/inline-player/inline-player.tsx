@@ -3,7 +3,7 @@ import { trackMocks } from '@/features/library-music/mock.ts';
 
 import styles from './inline-player.module.scss';
 import { ScrubberSlider } from '@/features/library-music-player/components/scrubber-slider/scrubber-slider.tsx';
-import { noop } from '@/utilities/noop.ts';
+import { noop } from '@/support/noop.ts';
 import { Cover } from '@/features/library-music/components/artwork/cover';
 import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 import {

@@ -121,7 +121,7 @@ class File implements FileInterface
     {
         $position = $this->file->ftell();
 
-        if (!$position) {
+        if ($position === false) {
             throw new ReadException('Unable to get the current position in the file');
         }
 

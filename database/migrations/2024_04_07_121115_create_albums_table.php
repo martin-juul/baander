@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('library_id')->index()->constrained()->cascadeOnDelete();
             $table->foreignId('artist_id')->index()->constrained()->cascadeOnDelete();
 
             $table->caseInsensitiveText('title');
             $table->text('slug')->unique();
-
-            $table->morphs('cover');
+            $table->text('directory');
 
             $table->integer('year')->comment('The year the album was released');
 

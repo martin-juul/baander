@@ -14,17 +14,15 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('album_id')->index()->constrained()->cascadeOnDelete();
-            $table->foreignId('artist_id')->nullable()->index();
 
             $table->caseInsensitiveText('title');
             $table->text('path');
 
-            $table->integer('length')->nullable();
+            $table->float('length')->nullable();
             $table->text('lyrics')->nullable();
             $table->integer('track')->nullable();
             $table->integer('disc')->nullable();
             $table->integer('modified_time')->nullable();
-            $table->text('genre')->nullable();
             $table->integer('year')->nullable();
             $table->text('comment')->nullable();
             $table->string('hash')->comment('sha hash of the file')->index()->nullable();

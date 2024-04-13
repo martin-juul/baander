@@ -22,11 +22,8 @@ class FFProbe extends FFMpegFFProbe
 
     /**
      * Create a new instance of this class with the instance of the underlying library.
-     *
-     * @param \FFMpeg\FFProbe $probe
-     * @return self
      */
-    public static function make(FFMpegFFProbe $probe): self
+    public static function make(?FFMpegFFProbe $probe = null): self
     {
         if ($probe instanceof FFProbe) {
             return $probe;

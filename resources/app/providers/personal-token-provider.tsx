@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeVar } from '@apollo/client';
-import { noop } from '@/utilities/noop.ts';
+import { noop } from '@/support/noop.ts';
 
 export const tokenVar = makeVar<string | null>(null);
 

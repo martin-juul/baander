@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:16.2-alpine
+    shm_size: 128mb
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=baander
+      - POSTGRES_PASSWORD=baander
+      - PGDATA=/var/lib/postgresql/data/baander_data
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  mailpit:
+    image: axllent/mailpit
+    volumes:
+      - mailpit:/data
+    ports:
+      - "127.0.0.1:8025:8025"
+      - "127.0.0.1:1025:1025"
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+volumes:
+  db-data:
+  mailpit:

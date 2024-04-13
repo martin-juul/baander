@@ -19,6 +19,7 @@ class Song extends BaseModel
         'title',
         'track',
         'year',
+        'hash',
     ];
 
     public function album()
@@ -26,14 +27,15 @@ class Song extends BaseModel
         return $this->belongsTo(Album::class);
     }
 
-    public function artist()
+    public function artists()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->belongsToMany(Artist::class)
+            ->using(ArtistSong::class);
     }
 
     public function albumArtist()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->belongsTo(Artist::class, '');
     }
 
     public function genres()

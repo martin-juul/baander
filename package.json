@@ -9,7 +9,7 @@
         "dev": "vite",
         "graphql-codegen:compile": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen",
         "graphql-codegen:watch": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen -w",
-        "refresh-gql-types": "ddev artisan lighthouse:print-schema --write && yarn graphql-codegen:compile"
+        "refresh-gql-types": "php artisan lighthouse:print-schema --write && yarn graphql-codegen:compile"
     },
     "dependencies": {
         "@apollo/client": "^3.9.10",

@@ -4,9 +4,6 @@ namespace App\Packages\MetaAudio;
 
 /**
  * Read/write tags from an mp3 file.
- * @mixin \App\Packages\MetaAudio\Modules\Ape
- * @mixin \App\Packages\MetaAudio\Modules\Id3v1
- * @mixin \App\Packages\MetaAudio\Modules\Id3v2
  */
 class Mp3 implements ModuleManagerInterface
 {
@@ -85,6 +82,26 @@ class Mp3 implements ModuleManagerInterface
         return $this->getModuleString(__FUNCTION__);
     }
 
+    public function getAlbumTitle()
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
+
+    public function getLength()
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
+
+
+    public function getComments()
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
+
+    public function getUnsychronizedLyrics()
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
 
     /**
      * Get the track number.
@@ -103,6 +120,17 @@ class Mp3 implements ModuleManagerInterface
      * @return string
      */
     public function getArtist(): string
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
+
+
+    /**
+     * Get the band (album artist)
+     *
+     * @return string
+     */
+    public function getBand(): string
     {
         return $this->getModuleString(__FUNCTION__);
     }
@@ -134,11 +162,20 @@ class Mp3 implements ModuleManagerInterface
      *
      * @return string
      */
-    public function getArtwork(): string
+    public function getAttachedPicture(): string
     {
         return $this->getModuleString(__FUNCTION__);
     }
 
+    /**
+     * Get the album artwork mime type
+     *
+     * @return string
+     */
+    public function getAttachedPictureMimeType(): string
+    {
+        return $this->getModuleString(__FUNCTION__);
+    }
 
     /**
      * Set a value using all active modules.

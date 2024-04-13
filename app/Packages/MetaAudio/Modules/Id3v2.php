@@ -276,6 +276,11 @@ class Id3v2 extends AbstractModule
         return $this->getTag('APIC');
     }
 
+    public function getAttachedPictureMimeType()
+    {
+        return $this->getTag('APIC-1');
+    }
+
     public function getComments(): string
     {
         return $this->getTag('COMM');
@@ -493,6 +498,10 @@ class Id3v2 extends AbstractModule
      */
     public function getYear(): int
     {
+        if ($this->getTag('TYER')) {
+            return (int)$this->getTag('TYER');
+        }
+
         return (int)$this->getTag('TDRC');
     }
 

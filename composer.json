@@ -6,9 +6,11 @@
     "require": {
         "php": "^8.3",
         "ext-curl": "*",
+        "ext-redis": "*",
         "guzzlehttp/guzzle": "^7.2",
         "joselfonseca/lighthouse-graphql-passport-auth": "@dev",
         "laravel/framework": "^11.0",
+        "laravel/horizon": "^5.24",
         "laravel/passport": "^12.0",
         "laravel/pulse": "^1.0@beta",
         "laravel/tinker": "^2.9",

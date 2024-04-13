@@ -17,16 +17,17 @@ class Artist extends BaseModel
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-                          ->generateSlugsFrom('name')
-                          ->saveSlugsTo('slug');
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
-    public function albums()
+    public function songs()
     {
-        return $this->hasMany(Album::class);
+        return $this->belongsToMany(Song::class)
+            ->using(ArtistSong::class);
     }
 
     public function image()

@@ -13,6 +13,7 @@ class Album extends BaseModel
         'title',
         'slug',
         'year',
+        'directory',
     ];
 
     /**
@@ -21,7 +22,7 @@ class Album extends BaseModel
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-                          ->generateSlugsFrom('name')
+                          ->generateSlugsFrom('title')
                           ->saveSlugsTo('slug');
     }
 
