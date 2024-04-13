@@ -3,6 +3,7 @@
 namespace App\Jobs\Library;
 
 use App\Models\{Album, Artist, Library, Song};
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Packages\MetaAudio\{MetaAudio, Mp3, Tagger};
 use App\Support\Logger\StdOutLogger;

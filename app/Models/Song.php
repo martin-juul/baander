@@ -22,6 +22,17 @@ class Song extends BaseModel
         'hash',
     ];
 
+    protected function setCommentAttribute(mixed $value): void
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            $this->attributes['comment'] = null;
+        } else {
+            $this->attributes['comment'] = $value;
+        }
+    }
+
     public function album()
     {
         return $this->belongsTo(Album::class);
