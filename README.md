@@ -7,23 +7,16 @@ Media server project
 To develop on this project you need:
 
 - [docker](https://www.docker.com/)
-- [ddev](https://ddev.readthedocs.io/en/stable/)
 - [node.js](https://nodejs.org/en)
 - [yarn 1.xx](https://yarnpkg.com/)
 
 ### Configuring ddev
 
-Go into the .ddev folder and adjust the paths the docker-compose files so they suit your system.
-
-### Starting the backend
-
-`ddev restart`
 
 ## Directory structure
 
 ```
 .ddev
-  * docker development setup
 app/ 
   - Packages
 config/
