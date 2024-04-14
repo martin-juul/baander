@@ -17,7 +17,8 @@ return new class extends Migration
 
             $table->caseInsensitiveText('title');
             $table->text('path');
-
+            $table->integer('size');
+            $table->text('mime_type');
             $table->float('length')->nullable();
             $table->text('lyrics')->nullable();
             $table->integer('track')->nullable();

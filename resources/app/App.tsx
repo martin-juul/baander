@@ -10,7 +10,7 @@ import { AppRoutes } from '@/routes';
 import { useSelector } from 'react-redux';
 import { selectToken } from '@/store/users/auth-slice.ts';
 import { useContext, useEffect } from 'react';
-import { PersonalTokenContext } from '@/providers/personal-token-provider.tsx';
+import { PersonalTokenContext } from '@/providers';
 
 function App() {
   const token = useSelector(selectToken);
@@ -27,7 +27,7 @@ function App() {
     <ApolloProvider client={client}>
       <ErrorBoundary fallback={<div>App error</div>}>
         <BrowserRouter>
-          <AppRoutes/>
+          <AppRoutes />
         </BrowserRouter>
         <ToastNotifications/>
       </ErrorBoundary>

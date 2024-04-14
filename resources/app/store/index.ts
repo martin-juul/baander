@@ -3,10 +3,12 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authSlice from '@/store/users/auth-slice.ts';
+import musicPlayerSlice from '@/store/music-player/music-player-slice.ts';
 import shellReducer from '@/store/app/shell-slice.ts';
 
 const reducers = combineReducers({
   authSlice,
+  musicPlayerSlice,
   shellReducer
 });
 

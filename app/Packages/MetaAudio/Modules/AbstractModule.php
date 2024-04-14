@@ -119,4 +119,18 @@ abstract class AbstractModule implements ModuleInterface
         $this->tags = null;
         return $this;
     }
+
+    protected function textEncodingTerminatorLookup($encoding): string
+    {
+        // http://www.id3.org/id3v2.4.0-structure.txt
+        // Frames that allow different types of text encoding contains a text encoding description byte. Possible encodings:
+        $map = [
+            0   => "\x00",     // $00  ISO-8859-1. Terminated with $00.
+            1   => "\x00\x00", // $01  UTF-16 encoded Unicode with BOM. All strings in the same frame SHALL have the same byteorder. Terminated with $00 00.
+            2   => "\x00\x00", // $02  UTF-16BE encoded Unicode without BOM. Terminated with $00 00.
+            3   => "\x00",     // $03  UTF-8 encoded Unicode. Terminated with $00.
+            255 => "\x00\x00",
+        ];
+        return ($map[$encoding] ?? '');
+    }
 }

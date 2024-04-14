@@ -2,6 +2,8 @@ schema: ./storage/app/lighthouse-schema.graphql
 include:
   - graphql/**
   - schema-directives.graphql
+exclude:
+  - resources/app/graphql/queries/*
 
 extensions:
   endpoints:

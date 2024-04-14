@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-app-env="{{ env('APP_ENV') }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-app-env="{{ config('app.env') }}">
 
 <head>
     <meta charset="utf-8">

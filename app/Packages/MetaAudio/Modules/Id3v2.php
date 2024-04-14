@@ -358,7 +358,7 @@ class Id3v2 extends AbstractModule
 
     public function getOriginalReleaseYear()
     {
-        return (int)$this->getTag('TORY');
+        return $this->getTag('TORY');
     }
 
     public function getLeadPerformer()
@@ -408,7 +408,12 @@ class Id3v2 extends AbstractModule
      */
     public function getTitle(): string
     {
-        return (string)$this->getTag('TIT2');
+        return $this->getTag('TIT2');
+    }
+
+    public function getGenre()
+    {
+        return $this->getTag('TCON');
     }
 
     /**

@@ -5,7 +5,7 @@ import styles from './album.module.scss';
 
 interface AlbumProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> {
   title: string;
-  primaryArtist: string;
+  primaryArtist?: string;
   imgSrc?: string;
 }
 
@@ -16,7 +16,9 @@ export function Album({ title, primaryArtist, imgSrc, ...props }: AlbumProps) {
       <Cover imgSrc={imgSrc} size={160} interactive={true} />
 
       <Text className={styles.title}>{ title }</Text>
-      <Text type="secondary">{ primaryArtist }</Text>
+      {primaryArtist && (
+        <Text type="secondary">{ primaryArtist }</Text>
+      )}
     </div>
   )
 }

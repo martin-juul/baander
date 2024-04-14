@@ -7,6 +7,7 @@ import { InlinePlayer } from '@/features/library-music-player/inline-player';
 
 import styles from './root-layout.module.scss';
 import { BaanderLogo } from '@/features/branding/baander-logo';
+import { MusicPlayerProvider } from '@/features/library-music-player/providers';
 
 type SideNavigationItem = {
   itemKey: string;
@@ -63,53 +64,55 @@ export function RootLayout(props: { children?: ReactNode }) {
   const location = useLocation();
 
   return (
-    <Layout style={{height: '100vh'}}>
-      <Header style={{backgroundColor: 'var(--semi-color-bg-1)', backdropFilter: 'blur(6px)'}}>
-        <Nav
-          mode="horizontal"
-          header={{
-            logo: (
-              <span className={styles.navigationHeaderLogo}>
+    <MusicPlayerProvider>
+      <Layout style={{height: '100vh'}}>
+        <Header style={{backgroundColor: 'var(--semi-color-bg-1)', backdropFilter: 'blur(6px)'}}>
+          <Nav
+            mode="horizontal"
+            header={{
+              logo: (
+                <span className={styles.navigationHeaderLogo}>
                 <BaanderLogo size={36}/>
               </span>
-            ),
-            text: 'Bånder',
-            link: '/',
-          }}
-          footer={
-            <>
-              <Link to="/settings" style={{textDecoration: 'none'}}>
-                <Button theme="borderless" style={{color: 'var(--semi-color-text-2)', marginRight: '12px'}}
-                        icon={<Icon icon="fa-solid:cog"/>}/>
-              </Link>
+              ),
+              text: 'Bånder',
+              link: '/',
+            }}
+            footer={
+              <>
+                <Link to="/settings" style={{textDecoration: 'none'}}>
+                  <Button theme="borderless" style={{color: 'var(--semi-color-text-2)', marginRight: '12px'}}
+                          icon={<Icon icon="fa-solid:cog"/>}/>
+                </Link>
 
-              <Button
-                theme="borderless"
-                icon={<IconBell size="large"/>}
-                style={{
-                  color: 'var(--semi-color-text-2)',
-                  marginRight: '12px',
-                }}
-              />
-              <Avatar color="orange" size="small">MC</Avatar>
-            </>
-          }
-        >
-        </Nav>
-      </Header>
-      <Layout>
-        {!location.pathname.startsWith('/settings') && (
-          <Sider>
-            <LibraryNavigation/>
-          </Sider>
-        )}
-        <Content>{props.children}</Content>
+                <Button
+                  theme="borderless"
+                  icon={<IconBell size="large"/>}
+                  style={{
+                    color: 'var(--semi-color-text-2)',
+                    marginRight: '12px',
+                  }}
+                />
+                <Avatar color="orange" size="small">MC</Avatar>
+              </>
+            }
+          >
+          </Nav>
+        </Header>
+        <Layout>
+          {!location.pathname.startsWith('/settings') && (
+            <Sider>
+              <LibraryNavigation/>
+            </Sider>
+          )}
+          <Content>{props.children}</Content>
+        </Layout>
+        <Footer className={styles.footer}>
+          <div className={styles.footerWell}>
+            <InlinePlayer/>
+          </div>
+        </Footer>
       </Layout>
-      <Footer className={styles.footer}>
-        <div className={styles.footerWell}>
-          <InlinePlayer/>
-        </div>
-      </Footer>
-    </Layout>
+    </MusicPlayerProvider>
   );
 }

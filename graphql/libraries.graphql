@@ -65,7 +65,10 @@ type Album {
     slug: String!
 
     "The release year"
-    year: Int!
+    year: Int
+
+    "Url to the cover"
+    coverUrl: String
 
     "The album cover"
     cover: Image
@@ -75,17 +78,21 @@ type Album {
 
     "When the account was last updated."
     updated_at: DateTime!
+
+    albumArtist: Artist @belongsTo
+    songs: [Song!]! @hasMany
+}
+
+type StreamUrls {
+    directStream: String
 }
 
 type Song {
     "Unique primary key."
     id: ID!
 
-    "The name of the song."
-    name: String!
-
-    "The identifier used for paths"
-    slug: String!
+    "The title of the song."
+    title: String!
 
     "The track number"
     track: Int
@@ -93,8 +100,10 @@ type Song {
     "The disc number"
     disc: Int
 
-    "The duration of the song"
-    duration: Int
+    "The duration of the song in minutes and seconds"
+    duration: String
+
+    length: Float
 
     modified_time: Int
 
@@ -102,9 +111,17 @@ type Song {
 
     path: String
 
+    streamUrls: StreamUrls
+
     "When the account was created."
     created_at: DateTime!
 
     "When the account was last updated."
     updated_at: DateTime!
+
+    artists: [Artist]! @belongsToMany
+
+    album: Album @belongsTo
+
+    genres: [Genre]! @morphToMany
 }

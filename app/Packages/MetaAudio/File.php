@@ -16,7 +16,7 @@ class File implements FileInterface
     private const int BUFFER_SIZE = 32768;
 
     /** @var SplFileObject $file The underlying file instance */
-    private SplFileObject $file;
+    public SplFileObject $file;
 
 
     /**

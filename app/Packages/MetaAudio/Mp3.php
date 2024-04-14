@@ -25,17 +25,7 @@ class Mp3 implements ModuleManagerInterface
         $this->file = $file;
     }
 
-
-    /**
-     * Get a string from the active modules.
-     *
-     * Modules should be loaded in priority sequence as this method returns the first match.
-     *
-     * @param string $method The method name to call on the modules
-     *
-     * @return string
-     */
-    private function getModuleString(string $method): string
+    private function getModuleStringOrNull(string $method): string|null
     {
         foreach ($this->getModules() as $module) {
             $module->open($this->file);
@@ -45,20 +35,10 @@ class Mp3 implements ModuleManagerInterface
             }
         }
 
-        return "";
+        return null;
     }
 
-
-    /**
-     * Get an integer from the active modules.
-     *
-     * Modules should be loaded in priority sequence as this method returns the first match.
-     *
-     * @param string $method The method name to call on the modules
-     *
-     * @return int
-     */
-    private function getModuleInt(string $method): int
+    private function getModuleIntOrNull(string $method): int|null
     {
         foreach ($this->getModules() as $module) {
             $module->open($this->file);
@@ -68,113 +48,86 @@ class Mp3 implements ModuleManagerInterface
             }
         }
 
-        return 0;
+        return null;
     }
 
 
     /**
      * Get the track title.
-     *
-     * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
-    public function getAlbumTitle()
+    public function getAlbumTitle(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
-    public function getLength()
+    public function getLength(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
 
-    public function getComments()
+    public function getComments(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
-    public function getUnsychronizedLyrics()
+    public function getUnsychronizedLyrics(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
     /**
      * Get the track number.
-     *
-     * @return int
      */
-    public function getTrackNumber(): int
+    public function getTrackNumber(): int|null
     {
-        return $this->getModuleInt(__FUNCTION__);
+        return $this->getModuleIntOrNull(__FUNCTION__);
     }
 
 
     /**
      * Get the artist name.
-     *
-     * @return string
      */
-    public function getArtist(): string
+    public function getArtist(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
 
     /**
      * Get the band (album artist)
-     *
-     * @return string
      */
-    public function getBand(): string
+    public function getBand(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
 
     /**
      * Get the album name.
-     *
-     * @return string
      */
-    public function getAlbum(): string
+    public function getAlbum(): string|null
     {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleStringOrNull(__FUNCTION__);
+    }
+
+    public function getGenre(): string|null
+    {
+        return $this->getModuleStringOrNull(__FUNCTION__);
     }
 
 
     /**
      * Get the release year.
-     *
-     * @return int
      */
-    public function getYear(): int
+    public function getYear(): int|null
     {
-        return $this->getModuleInt(__FUNCTION__);
-    }
-
-    /**
-     * Get the album artwork
-     *
-     * @return string
-     */
-    public function getAttachedPicture(): string
-    {
-        return $this->getModuleString(__FUNCTION__);
-    }
-
-    /**
-     * Get the album artwork mime type
-     *
-     * @return string
-     */
-    public function getAttachedPictureMimeType(): string
-    {
-        return $this->getModuleString(__FUNCTION__);
+        return $this->getModuleIntOrNull(__FUNCTION__);
     }
 
     /**

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Tpetry\PostgresqlEnhanced\Schema\Blueprint;
 use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->text('slug')->unique();
             $table->text('directory');
 
-            $table->integer('year')->comment('The year the album was released');
+            $table->integer('year')->nullable()->comment('The year the album was released');
 
             $table->timestampsTz();
         });

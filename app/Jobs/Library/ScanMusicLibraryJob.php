@@ -2,9 +2,7 @@
 
 namespace App\Jobs\Library;
 
-use App\Models\{Album, Artist, Library, Song};
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Models\{Album, Artist, Genre, Library, Song};
 use App\Packages\MetaAudio\{MetaAudio, Mp3, Tagger};
 use App\Support\Logger\StdOutLogger;
 use Illuminate\Bus\Queueable;
@@ -12,6 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\{InteractsWithQueue, SerializesModels};
 use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Str;
+use Safe\Exceptions\MbstringException;
+use Safe\Exceptions\StringsException;
 
 class ScanMusicLibraryJob implements ShouldQueue
 {
@@ -34,6 +35,9 @@ class ScanMusicLibraryJob implements ShouldQueue
      */
     public function handle(): void
     {
+        Album::truncate();
+
+        $this->library->update(['last_scan' => now()]);
         $path = $this->library->path;
         $this->logger = new StdOutLogger();
 
@@ -56,7 +60,11 @@ class ScanMusicLibraryJob implements ShouldQueue
 
         $this->logger->info('Scanning directory: ' . $directory);
 
-        $files->each(function (\SplFileInfo $file) {
+        $files->each(/**
+         * @throws \Throwable
+         * @throws MbstringException
+         * @throws StringsException
+         */ function (\SplFileInfo $file) {
             $this->logger->info('Scanning file: ' . $file->getFilename());
 
             $realPath = $file->getRealPath();
@@ -87,24 +95,31 @@ class ScanMusicLibraryJob implements ShouldQueue
             $song->album()->associate($album);
             $song->saveOrFail();
 
+            $this->processGenres($meta, $song);
+
             $artists = array_map(fn(string $artist) => trim($artist), \Safe\mb_split(';', $meta->getArtist()));
             $this->processArtists($artists, $song);
 
-            // if ($meta->getAttachedPicture() && !$album->cover()->exists()) {
-            //     dispatch(new SaveAlbumCoverJob($album));
-            //}
+            if (!$album->cover()->exists()) {
+                dispatch(new SaveAlbumCoverJob($album));
+            }
         });
     }
 
+    /**
+     * @throws \Throwable
+     */
     private function createAlbum(Mp3 $meta, Artist $albumArtist, string $directoryName): Album
     {
-        $album = Album::make([
-            'title' => $meta->getAlbumTitle() ?? $meta->getAlbum(),
-            'year' => $meta->getYear(),
-            'directory' => $directoryName
+        $albumYear = $meta->getYear();
+
+        $album = new Album([
+            'title'     => $meta->getAlbumTitle() ?? $meta->getAlbum() ?? $directoryName,
+            'year'      => $albumYear !== 0 ? $albumYear : null,
+            'directory' => $directoryName,
         ]);
 
-        $album->artist()->associate($albumArtist);
+        $album->albumArtist()->associate($albumArtist);
         $album->library()->associate($this->library);
         $album->saveOrFail();
 
@@ -113,21 +128,18 @@ class ScanMusicLibraryJob implements ShouldQueue
         return $album;
     }
 
-    private function makeSong(
-        Mp3 $meta, \SplFileInfo $file, MetaAudio $metaAudio, string $hash): Song
+    private function makeSong(Mp3 $meta, \SplFileInfo $file, MetaAudio $metaAudio, string $hash): Song
     {
-        $song = Song::make([
-            'title' => $meta->getTitle(),
-            'track' => $meta->getTrackNumber(),
-            'length' => $metaAudio->probeLength(),
-            'comment' => $meta->getComments(),
-            'lyrics' => $meta->getUnsychronizedLyrics(),
-            'path' => $file->getRealPath(),
+        return new Song([
+            'title'         => $meta->getTitle(),
+            'track'         => $meta->getTrackNumber(),
+            'length'        => $metaAudio->probeLength(),
+            'lyrics'        => $meta->getUnsychronizedLyrics(),
+            'path'          => $file->getRealPath(),
             'modified_time' => $file->getMTime(),
-            'hash' => $hash,
+            'size'          => is_int($file->getSize()) ? $file->getSize() : 0,
+            'hash'          => $hash,
         ]);
-
-        return $song;
     }
 
     private function processArtists(array $artists, Song $song)
@@ -139,9 +151,27 @@ class ScanMusicLibraryJob implements ShouldQueue
                 'name' => $artist,
             ]);
 
-           $artistIds[] = $artistModel->id;
+            $artistIds[] = $artistModel->id;
         }
 
         $song->artists()->sync($artistIds);
+    }
+
+    private function processGenres(Mp3 $mp3, Song $song)
+    {
+        $genreIds = [];
+        $genres = $mp3->getGenre();
+        if (!is_string($genres)) {
+            return;
+        }
+
+        $genres = collect(explode(';', $genres))->each(fn(string $genre) => Str::ucfirst(trim($genre)));
+
+        foreach ($genres as $genre) {
+            $genreModel = Genre::firstOrCreate(['name' => $genre]);
+            $genreIds[] = $genreModel->id;
+        }
+
+        $song->genres()->sync($genreIds);
     }
 }

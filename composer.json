@@ -6,8 +6,13 @@
     "require": {
         "php": "^8.3",
         "ext-curl": "*",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
         "ext-redis": "*",
         "guzzlehttp/guzzle": "^7.2",
+        "hidehalo/nanoid-php": "^1.1",
+        "intervention/image": "^3.5",
         "joselfonseca/lighthouse-graphql-passport-auth": "@dev",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.24",
@@ -18,7 +23,8 @@
         "nuwave/lighthouse": "^v6.36.0",
         "php-ffmpeg/php-ffmpeg": "^1.2",
         "spatie/laravel-sluggable": "^3.6",
-        "tpetry/laravel-postgresql-enhanced": "^0.37.0"
+        "tpetry/laravel-postgresql-enhanced": "^0.37.0",
+        "zend/php-reader": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -75,6 +81,13 @@
         {
             "type": "path",
             "url": "./third_party/joselfonseca/lighthouse-graphql-passport-auth",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "./third_party/php-reader-1.8.1",
             "options": {
                 "symlink": true
             }

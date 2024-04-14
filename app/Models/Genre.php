@@ -24,11 +24,6 @@ class Genre extends BaseModel
                           ->saveSlugsTo('slug');
     }
 
-   public function albums()
-   {
-       return $this->morphedByMany(Album::class, 'genreable');
-   }
-
    public function songs()
    {
        return $this->morphedByMany(Song::class, 'genreable');

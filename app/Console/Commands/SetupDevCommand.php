@@ -26,7 +26,8 @@ class SetupDevCommand extends Command
      */
     public function handle()
     {
-        $this->call('migrate:refresh');
+        $this->call('migrate');
+        $this->call('key:generate');
 
         $this->call('db:seed', [
             '--class' => UsersSeed::class

@@ -11,9 +11,9 @@ const { SettingsRoutes } = lazyImport(() => import('@/features/settings/routes')
 const App = () => {
   return (
     <RootLayout>
-      <Suspense>
-        <Outlet/>
-      </Suspense>
+        <Suspense>
+          <Outlet/>
+        </Suspense>
     </RootLayout>
   );
 };

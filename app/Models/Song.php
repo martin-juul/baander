@@ -20,18 +20,9 @@ class Song extends BaseModel
         'track',
         'year',
         'hash',
+        'size',
+        'mime_type',
     ];
-
-    protected function setCommentAttribute(mixed $value): void
-    {
-        $value = trim($value);
-
-        if ($value === '') {
-            $this->attributes['comment'] = null;
-        } else {
-            $this->attributes['comment'] = $value;
-        }
-    }
 
     public function album()
     {
@@ -51,6 +42,6 @@ class Song extends BaseModel
 
     public function genres()
     {
-        return $this->morphToMany(Genre::class, 'genreable');
+        return $this->morphToMany(Genre::class, 'genreables');
     }
 }

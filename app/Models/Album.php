@@ -31,15 +31,11 @@ class Album extends BaseModel
         return $this->belongsTo(Library::class);
     }
 
-    public function artist()
+    public function albumArtist()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->belongsTo(Artist::class, 'artist_id', 'id', '');
     }
 
-    public function genres()
-    {
-        return $this->morphToMany(Genre::class, 'genreable');
-    }
 
     public function cover()
     {

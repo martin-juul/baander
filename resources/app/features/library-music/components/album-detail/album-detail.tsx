@@ -1,46 +1,109 @@
-import { Album, trackMocks } from '@/features/library-music/mock.ts';
 import { Cover } from '@/features/library-music/components/artwork/cover';
-import { Typography } from '@douyinfe/semi-ui';
+import { Banner, Spin, Table, Typography } from '@douyinfe/semi-ui';
 
 import styles from './album-detail.module.scss';
+import { useQuery } from '@apollo/client';
+import { ALBUM_QUERY, AlbumResponse, AlbumVariables } from '@/graphql/queries/use-album-query.ts';
+import { Song, SortOrder } from '@/graphql/__generated__/graphql.ts';
+import { ColumnProps } from '@douyinfe/semi-ui/lib/es/table';
+import { useAppDispatch } from '@/store/hooks.ts';
+import { setCurrentSongId } from '@/store/music-player/music-player-slice.ts';
 
 interface AlbumDetailProps {
-  album: Album;
+  albumId: string;
 }
 
-export function AlbumDetail({album}: AlbumDetailProps) {
-  const { Title, Text } = Typography;
+export function AlbumDetail({albumId}: AlbumDetailProps) {
+  const {data, loading, error} = useQuery<AlbumResponse, AlbumVariables>(ALBUM_QUERY, {
+    variables: {
+      album_id: albumId,
+      order_by: {
+        column: 'track',
+        order: SortOrder.Asc,
+      },
+    },
+  });
 
-  const tracks = trackMocks;
+  const {Title, Text} = Typography;
 
   return (
-    <div className={styles.albumDetail}>
-      <div className={styles.albumInfo}>
-        <div className={styles.albumCover}>
-          <Cover imgSrc={album.cover} size={220}/>
+    <>
+      {loading && <Spin/>}
+      {error && <Banner type="danger" description={error.message}/>}
+
+      <div className={styles.albumDetail}>
+        <div className={styles.albumInfo}>
+          <div className={styles.albumCover}>
+            <Cover imgSrc={data?.album.coverUrl ?? undefined} size={220}/>
+          </div>
+
+          <div className={styles.albumResume}>
+            <Title heading={2}>{data?.album.title}</Title>
+            {data?.album.albumArtist && (
+              <Text type="secondary">{data?.album.albumArtist?.name}</Text>
+            )}
+
+
+            <Text type="secondary">album.genre - {data?.album.year}</Text>
+          </div>
         </div>
 
-        <div className={styles.albumResume}>
-          <Title heading={2}>{album.title}</Title>
-          <Text type="secondary">{album.artist}</Text>
+        <div>
 
-          <Text type="secondary">{album.genre} - {album.releaseYear}</Text>
+          <div className={styles.trackList}>
+            {data?.album.songs && <AlbumSongs songs={data?.album.songs}/>}
+          </div>
         </div>
       </div>
+    </>
+  );
+}
 
-      <div>
-        <Text type="secondary">Tracks</Text>
+interface AlbumSongProps {
+  songs: Song[];
+}
 
-        <div className={styles.trackList}>
-          {tracks.map((track, index) => (
-            <div className={styles.track} key={index}>
-              <Text type="primary">{track.number}</Text>
-              <Text>{track.title}</Text>
-              <Text>{track.duration}</Text>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+function AlbumSongs({songs}: AlbumSongProps) {
+  const dispatch = useAppDispatch();
+
+  const playSong = (songId: string) => {
+    dispatch(setCurrentSongId(songId));
+  };
+
+  const columns: ColumnProps<Song>[] = [
+    {
+      name: 'Track',
+      dataIndex: 'track',
+    },
+    {
+      name: 'Title',
+      dataIndex: 'title',
+    },
+    {
+      name: 'Duration',
+      dataIndex: 'duration',
+    },
+  ];
+
+
+  return (
+    <>
+      <Table<Song>
+        columns={columns}
+        dataSource={songs}
+        pagination={false}
+        indentSize={8}
+        size={'small'}
+        showHeader={false}
+        onRow={(record) => ({
+          className: styles.trackRow,
+          onClick: () => {
+            if (record && record.id) {
+              playSong(record.id);
+            }
+          },
+        })}
+      />
+    </>
   );
 }
